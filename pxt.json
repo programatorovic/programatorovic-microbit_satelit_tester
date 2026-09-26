@@ -1,7 +1,7 @@
 {
     "name": "pxt-satelit-tester",
     "version": "1.0.0",
-    "description": "Simulátor letu meteorologického satelitu a CanSat sondy.",
+    "description": "Simulator letu meteorologickeho satelitu a CanSat sondy.",
     "dependencies": {
         "core": "*"
     },
