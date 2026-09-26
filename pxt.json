@@ -1,0 +1,19 @@
+{
+    "name": "pxt-satelit-tester",
+    "version": "1.0.0",
+    "description": "Simulátor letu meteorologického satelitu a CanSat sondy pre stredoškolské projekty.",
+    "dependencies": {
+        "core": "*",
+        "radio": "*",
+        "serial": "*"
+    },
+    "files": [
+        "main.ts",
+        "README.md"
+    ],
+    "testFiles": [],
+    "supportedTargets": [
+        "microbit"
+    ],
+    "preferredEditor": "tsprj"
+}
