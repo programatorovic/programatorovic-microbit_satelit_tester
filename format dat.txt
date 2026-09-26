@@ -1,0 +1,19 @@
+Štruktúra telemetrického riadku data:
+
+Poradie Názov_položky Formát/Jednotka   Príklad  Význam a správanie v simulácii
+
+1.      Prefix       text (data)       data     Identifikátor riadku pre telemetrickú stanicu.
+2.      Čas          celé č.  (ms)     24500    Čas od štartu micro:bitu. Používa sa na výpočet rýchlosti pádu.
+3.      Výška        des. č.  (m)      542.3    Relatívna výška od zeme. Vystúpi plynule do ~1050 m a potom klesá.
+4.      Teplota      reálne č. (°C)     18.8    Teplota vzduchu. Plynule klesá s pribúdajúcou výškou (cca -0.65°C na 100m).
+5.      Vlhkosť      celé č.  (%)         55    Relatívna vlhkosť vzduchu. So stúpaním sondy plynule narastá.
+6.      eCO2         celé č.  (ppm)      422    Koncentrácia CO2. Pri zemi je vyššia, vo výške klesá.
+7.      TVOC         celé č.  (ppb)        9    Prchavé organické látky. Vyššie znečistenie pri zemi, hore čistejší vzduch.
+8.      AccX         des. č.  (g)       0.12    Zrýchlenie v osi X (bočné otrasy pri stúpaní alebo klesaní).
+9.      AccY         des. č.  (g)      -0.05    Zrýchlenie v osi Y (bočné otrasy).
+10.     AccZ         des. č.  (g)       1.04    Zrýchlenie v osi Z (gravitácia a vertikálne otrasy).
+11.     GyroX        des. č.  (rad/s)   0.00    Rýchlosť rotácie okolo osi X.
+12.     GyroY        des. č.  (rad/s)   0.00    Rýchlosť rotácie okolo osi Y.
+13.     GyroZ        des. č.  (rad/s)   1.45    Rotácia padáku. Po dosiahnutí vrcholu simuluje plynulé točenie sondy sínusoidou.
+14.     Latitude     des. č. (°)   48.615024    GPS Zemepisná šírka. Vietor plynule unáša sondu na juhovýchod.
+15.     Longitu      ded. č. (°)   19.150048    GPS Zemepisná dĺžka. Smeruje do oblasti stredného Slovenska (Sliač).
