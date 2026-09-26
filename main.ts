@@ -32,17 +32,17 @@ namespace SatelitTester {
         // Inicializačná sekvencia (info správy)
         posliSpravu("info", "System sa spusta...")
         basic.pause(400)
-
+        
         if (chybovost > 0 && Math.randomRange(1, 100) <= chybovost) {
             posliSpravu("err", "BME280 odpojeny")
         } else {
             posliSpravu("info", "BME280 najdeny na adrese 0x76")
         }
-
+        
         posliSpravu("info", "MPU6050 inicializovany OK")
         posliSpravu("info", "SGP30 inicializovany OK")
         basic.pause(300)
-
+        
         posliSpravu("info", "Ref_Tlak:" + pociatocnyTlak + "hPa,Ref_Teplota:22.4C")
         posliSpravu("info", "SD karta pripravena")
         posliSpravu("info", "Sonda pripravena na start")
@@ -80,7 +80,7 @@ namespace SatelitTester {
                 }
                 let t = letovyCas / DUR_STUPANIA
                 vyska = 1050.0 * (1.0 - (1.0 - t) * (1.0 - t))
-
+                
                 accZ = 1.2 + (Math.randomRange(-30, 30) / 100.0)
                 gyroZ = Math.randomRange(-50, 50) / 100.0
             } else {
@@ -96,7 +96,6 @@ namespace SatelitTester {
                 accZ = 1.0 + (Math.randomRange(-10, 10) / 100.0)
             }
 
-            // Výpočty hodnôt upravené pre celočíselné delenie v PXT
             teplota = 22.4 - (vyska * 0.0065)
             vlhkost = 45.0 + (vyska * 0.02)
             eco2 = Math.floor(450 - (vyska * 0.05))
@@ -139,17 +138,15 @@ namespace SatelitTester {
     function posliSpravu(typ: string, text: string): void {
         let riadok = typ + "," + control.millis() + "," + text
         serial.writeLine(riadok)
-        // OPRAVENÁ SYNTAX: Bezpečný výsek prvého znaku kompatibilný s MakeCode
         zobraziPismeno(typ.substr(0, 1))
     }
 
     function odosliDataRiadok(vyska: number, temp: number, rh: number, co2: number, voc: number, ax: number, ay: number, az: number, gx: number, gy: number, gz: number, lat: number, lon: number): void {
-        // Zrekonstruované spájanie pre korektný preklad do stringu bez pretečenia zásobníka
-        let riadokDat = "data," + control.millis() + "," +
-            vyska + "," + temp + "," + rh + "," + co2 + "," + voc + "," +
+        let riadokDat = "data," + control.millis() + "," + 
+            vyska + "," + temp + "," + rh + "," + co2 + "," + voc + "," + 
             ax + "," + ay + "," + az + "," + gx + "," + gy + "," + gz + "," +
             lat + "," + lon
-
+        
         serial.writeLine(riadokDat)
         zobraziPismeno("d")
     }
