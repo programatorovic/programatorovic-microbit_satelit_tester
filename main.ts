@@ -14,10 +14,10 @@ namespace SatelitTester {
 
     /**
      * Spustí kompletnú simuláciu letu CanSat sondy cez USB sériovú linku micro:bitu.
-     * @param percentoChyb Pravdepodobnosť generovania chýb a anomálií (0-100%), eg: 10
+     * @param percentoChyb Pravdepodobnosť generovania chýb a anomálií (0-100%)
      */
-    //% block="Spusti simuláciu letu s chybovosťou %percentoChyb | %"
-    //% percentoChyb.shadow="slider" percentoChyb.min=0 percentoChyb.max=100
+    //% block="Spusti simuláciu letu s chybovosťou %percentoChyb"
+    //% percentoChyb.min=0 percentoChyb.max=100
     export function spustiSimulaciu(percentoChyb: number): void {
         // Ochrana vstupu proti podtečeniu a pretečeniu (0-100)
         let chybovost = Math.max(0, Math.min(100, percentoChyb))
@@ -96,6 +96,7 @@ namespace SatelitTester {
                 accZ = 1.0 + (Math.randomRange(-10, 10) / 100.0)
             }
 
+            // Výpočty hodnôt upravené pre celočíselné delenie v PXT
             teplota = 22.4 - (vyska * 0.0065)
             vlhkost = 45.0 + (vyska * 0.02)
             eco2 = Math.floor(450 - (vyska * 0.05))
@@ -107,7 +108,6 @@ namespace SatelitTester {
             let nahodneCislo = Math.randomRange(1, 100)
             let chybaGenerovana = false
 
-            // Vetvenie anomálií a chýb na základe chybovosti (slidera)
             if (chybovost > 0 && nahodneCislo <= chybovost) {
                 let typChyby = Math.randomRange(1, 3)
                 chybaGenerovana = true
@@ -139,18 +139,18 @@ namespace SatelitTester {
     function posliSpravu(typ: string, text: string): void {
         let riadok = typ + "," + control.millis() + "," + text
         serial.writeLine(riadok)
-        zobraziPismeno(typ.charAt(0))
+        // OPRAVENÁ SYNTAX: Bezpečný výsek prvého znaku kompatibilný s MakeCode
+        zobraziPismeno(typ.substr(0, 1))
     }
 
     function odosliDataRiadok(vyska: number, temp: number, rh: number, co2: number, voc: number, ax: number, ay: number, az: number, gx: number, gy: number, gz: number, lat: number, lon: number): void {
-        let riadokDát = "data," + control.millis() + "," +
-            vyska.toFixed(1) + "," + temp.toFixed(1) + "," + rh.toFixed(0) + "," +
-            co2 + "," + voc + "," +
-            ax.toFixed(2) + "," + ay.toFixed(2) + "," + az.toFixed(2) + "," +
-            gx.toFixed(2) + "," + gy.toFixed(2) + "," + gz.toFixed(2) + "," +
-            lat.toFixed(6) + "," + lon.toFixed(6)
+        // Zrekonstruované spájanie pre korektný preklad do stringu bez pretečenia zásobníka
+        let riadokDat = "data," + control.millis() + "," +
+            vyska + "," + temp + "," + rh + "," + co2 + "," + voc + "," +
+            ax + "," + ay + "," + az + "," + gx + "," + gy + "," + gz + "," +
+            lat + "," + lon
 
-        serial.writeLine(riadokDát)
+        serial.writeLine(riadokDat)
         zobraziPismeno("d")
     }
 
